@@ -1,35 +1,20 @@
 import React, { Component } from 'react';
-import {bindActionCreators} from '../redux'
-import store from '../store'
+// import {bindActionCreators} from '../redux'
+// import store from '../store'
+import { connect } from 'react-redux'
 import actions from '../store/action'
 
-let boundActions = bindActionCreators(actions, store.dispatch)
+// let boundActions = bindActionCreators(actions, store.dispatch)
 
 class Counter extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      num: store.getState().counter1.num
-    }
-  }
-  componentDidMount() {
-    this.unsubscribe = store.subscribe(() => {
-      this.setState({ num: store.getState().counter1.num })
-    })
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe()
-  }
-
   handleClick = () => {
-    boundActions.increment()
+    this.props.increment()
   }
 
   render() {
     return (
       <div>
-        <p>{this.state.num}</p>
+        <p>{this.props.num}</p>
         <button onClick={this.handleClick}>
           +
         </button>
@@ -37,5 +22,10 @@ class Counter extends Component {
     );
   }
 }
+// connect 连接仓库和组件
+const mapStateToProps = state => {
+  return state.counter1
+}
+// 优化性能，当属性改变刷新视图
 
-export default Counter;
+export default connect(mapStateToProps, actions)(Counter);
