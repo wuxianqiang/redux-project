@@ -9,12 +9,12 @@ class Counter extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      num: store.getState().num
+      num: store.getState().counter1.num
     }
   }
   componentDidMount() {
     this.unsubscribe = store.subscribe(() => {
-      this.setState({ num: store.getState().num })
+      this.setState({ num: store.getState().counter1.num })
     })
   }
 
