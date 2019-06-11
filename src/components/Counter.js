@@ -8,6 +8,7 @@ import actions from '../store/action'
 
 class Counter extends Component {
   handleClick = () => {
+    console.log(this.props)
     this.props.increment()
   }
 
@@ -27,5 +28,11 @@ const mapStateToProps = state => {
   return state.counter1
 }
 // 优化性能，当属性改变刷新视图
+
+const mapDispatchToProps = dispatch => {
+  return {
+    increment: (...args) => dispatch(actions.increment(...args))
+  }
+}
 
 export default connect(mapStateToProps, actions)(Counter);
